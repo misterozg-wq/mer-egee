@@ -1,7 +1,7 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Retoucherie Mer Égée — Retouches &amp; couture à Paris 5e</title>
   <meta name="description" content="Retoucherie Mer Égée, 11 rue Lacépède, 75005 Paris : ourlets, cintrages, transformations. Ouvert lundi–samedi. Tél. 01 45 87 17 20.">
@@ -40,10 +40,104 @@
   <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/styles.css?v=3">
 
+  <!-- Section Tarifs -->
+  <style>
+    .pricing-strip {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 18px; margin-bottom: 26px; padding: 18px 22px;
+      background: var(--ink); color: var(--ivory);
+    }
+    .pricing-strip-main { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+    .pricing-strip-main span {
+      font-size: 10px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--copper-light);
+    }
+    .pricing-strip-main strong {
+      font-family: var(--serif); font-size: clamp(26px, 3vw, 36px); font-weight: 500;
+      letter-spacing: -.02em; line-height: 1;
+    }
+    .pricing-strip-main strong em { color: var(--copper-light); }
+    .pricing-strip-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pricing-strip-tags span {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px;
+      border: 1px solid rgba(247,242,231,.28); border-radius: 99px;
+      font-size: 9.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+    }
+    .pricing-strip-tags .icon { width: 12px; height: 12px; color: var(--copper-light); }
+
+    .pricing-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .pricing-tab {
+      min-height: 40px; padding: 0 16px; border: 1px solid var(--line-strong); border-radius: 99px;
+      background: transparent; cursor: pointer;
+      font-size: 10.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--ink-soft);
+      transition: background .25s var(--ease), color .25s, border-color .25s;
+    }
+    .pricing-tab:hover { border-color: var(--ink); color: var(--ink); }
+    .pricing-tab[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--ivory); }
+
+    .pricing-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: start; }
+    .price-card {
+      position: relative; padding: clamp(22px, 2.6vw, 32px);
+      border: 1px solid var(--line); background: var(--paper);
+      transition: border-color .3s, transform .3s var(--ease), box-shadow .3s var(--ease);
+    }
+    .price-card:hover {
+      border-color: rgba(176,92,59,.45); transform: translateY(-3px);
+      box-shadow: 0 22px 40px -30px rgba(23,39,46,.35);
+    }
+    .price-card[hidden] { display: none; }
+    .price-card-head {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding-bottom: 16px; margin-bottom: 6px; border-bottom: 1px solid var(--line);
+    }
+    .price-card-title { display: flex; align-items: center; gap: 14px; }
+    .price-card-title .icon { width: 34px; height: 34px; color: var(--copper-dark); }
+    .price-card h3 { font-size: clamp(25px, 2.2vw, 30px); letter-spacing: -.02em; }
+    .price-from {
+      flex: 0 0 auto; padding: 6px 11px; border-radius: 99px;
+      background: var(--copper); color: var(--ivory);
+      font-size: 9.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap;
+    }
+    .price-list li {
+      display: flex; align-items: baseline; gap: 10px; padding: 11px 0;
+      font-size: 14px; color: var(--ink-soft);
+    }
+    .price-list li + li { border-top: 1px dotted var(--line); }
+    .price-list .label { flex: 0 1 auto; }
+    .price-list .leader { flex: 1 1 auto; min-width: 16px; border-bottom: 1px dotted var(--line-strong); transform: translateY(-4px); }
+    .price-list .price {
+      flex: 0 0 auto; font-family: var(--serif); font-size: 22px; font-weight: 600;
+      line-height: 1; color: var(--ink); white-space: nowrap; font-variant-numeric: lining-nums proportional-nums;
+    }
+    .price-list .price small {
+      margin-right: 4px; font-family: var(--sans); font-size: 9px; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--copper-dark);
+    }
+    .pricing-foot {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 20px; margin-top: 26px; padding: 20px 22px;
+      border-left: 2px solid var(--copper); background: rgba(176,92,59,.06);
+    }
+    .pricing-foot p { max-width: 60ch; font-size: 13px; line-height: 1.7; color: var(--ink-soft); }
+    .pricing-foot p strong { color: var(--ink); font-weight: 600; }
+
+    @media (max-width: 980px) { .pricing-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 720px) {
+      .pricing-tabs { flex-wrap: nowrap; overflow-x: auto; margin-inline: calc(-1 * var(--pad)); padding-inline: var(--pad); scrollbar-width: none; }
+      .pricing-tabs::-webkit-scrollbar { display: none; }
+      .pricing-tab { flex: 0 0 auto; }
+      .price-list li { font-size: 13.5px; }
+      .price-list .price { font-size: 20px; }
+      .pricing-foot .btn { width: 100%; }
+    }
+  </style>
+
   <noscript>
     <style>
       .menu-toggle { display: none !important; }
       [data-map-load] { display: none !important; }
+      .pricing-tabs { display: none !important; }
       .mobile-bar {
         visibility: visible !important;
         opacity: 1 !important;
@@ -148,6 +242,9 @@
     <symbol id="i-metro" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 9h14M8 21l2-4M16 21l-2-4"/><circle cx="9" cy="13" r=".8"/><circle cx="15" cy="13" r=".8"/></symbol>
     <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M10 5H5v14h14v-5"/></symbol>
     <symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="m12 2.6 2.9 6 6.6.9-4.8 4.7 1.2 6.6-5.9-3.2-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9Z"/></symbol>
+    <symbol id="i-shirt" viewBox="0 0 24 24"><path d="M8 3 3 6l2 4 2-1v12h10V9l2 1 2-4-5-3c-.5 1.5-2 2.5-4 2.5S8.5 4.5 8 3Z"/><path d="M12 8v13"/></symbol>
+    <symbol id="i-coat" viewBox="0 0 24 24"><path d="M9 3h6l5 4-2 4-2-1v11H8V10l-2 1-2-4 5-4Z"/><path d="m9 3 3 5 3-5M12 8v13"/></symbol>
+    <symbol id="i-leather" viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="M8 7h8v10H8z" stroke-dasharray="2 2"/></symbol>
   </svg>
 
   <a class="skip-link" href="#contenu">Aller au contenu</a>
@@ -167,9 +264,10 @@
 
       <nav class="nav" id="nav" aria-label="Navigation principale">
         <button class="nav-close" type="button" data-menu-close aria-label="Fermer le menu">
-          <svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg>
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
         </button>
         <a href="#prestations">Prestations</a>
+        <a href="#tarifs">Tarifs</a>
         <a href="#savoir-faire">Savoir-faire</a>
         <a href="#avis">Avis</a>
         <a href="#acces">Accès</a>
@@ -178,11 +276,11 @@
 
       <a class="btn btn--small btn--primary header-cta" href="tel:+33145871720">
         Appeler
-        <svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg>
+        <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
       </a>
 
       <button class="menu-toggle" type="button" data-menu-open aria-expanded="false" aria-controls="nav" aria-label="Ouvrir le menu">
-        <svg class="icon" aria-hidden="true"><use href="#i-menu"></use></svg>
+        <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
       </button>
     </div>
   </header>
@@ -208,11 +306,11 @@
           <div class="hero-actions reveal" style="--d: .24s">
             <a class="btn btn--primary" href="tel:+33145871720">
               Appeler l’atelier
-              <svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg>
+              <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
             </a>
             <a class="btn btn--ghost" href="#acces">
               Voir l’adresse
-              <svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg>
+              <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
             </a>
           </div>
           <div class="hero-meta reveal" style="--d: .3s">
@@ -302,63 +400,198 @@
         <div class="services">
           <article class="service reveal">
             <div class="service-top">
-              <svg class="icon service-icon" aria-hidden="true"><use href="#i-hem"></use></svg>
+              <svg class="icon service-icon" aria-hidden="true"><use href="#i-hem"/></svg>
               <span class="service-num">01</span>
             </div>
             <h3>Ourlets &amp; longueurs</h3>
             <p>Pantalons, jupes, robes, manches&nbsp;: retrouver la bonne longueur, avec une finition nette et discrète.</p>
-            <a class="service-foot" href="tel:+33145871720">Nous consulter <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+            <a class="service-foot" href="tel:+33145871720">Nous consulter <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </article>
 
           <article class="service reveal" style="--d: .06s">
             <div class="service-top">
-              <svg class="icon service-icon" aria-hidden="true"><use href="#i-dressform"></use></svg>
+              <svg class="icon service-icon" aria-hidden="true"><use href="#i-dressform"/></svg>
               <span class="service-num">02</span>
             </div>
             <h3>Cintrages &amp; ajustements</h3>
             <p>Taille, épaules, dos, poitrine&nbsp;: reprendre une coupe pour qu’elle épouse la silhouette sans la contraindre.</p>
-            <a class="service-foot" href="tel:+33145871720">Nous consulter <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+            <a class="service-foot" href="tel:+33145871720">Nous consulter <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </article>
 
           <article class="service reveal" style="--d: .12s">
             <div class="service-top">
-              <svg class="icon service-icon" aria-hidden="true"><use href="#i-zipper"></use></svg>
+              <svg class="icon service-icon" aria-hidden="true"><use href="#i-zipper"/></svg>
               <span class="service-num">03</span>
             </div>
             <h3>Fermetures &amp; réparations</h3>
             <p>Zip grippé, bouton manquant, doublure déchirée, accroc&nbsp;: réparer pour prolonger la vie du vêtement.</p>
-            <a class="service-foot" href="tel:+33145871720">Nous consulter <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+            <a class="service-foot" href="tel:+33145871720">Nous consulter <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </article>
 
           <article class="service reveal">
             <div class="service-top">
-              <svg class="icon service-icon" aria-hidden="true"><use href="#i-scissors"></use></svg>
+              <svg class="icon service-icon" aria-hidden="true"><use href="#i-scissors"/></svg>
               <span class="service-num">04</span>
             </div>
             <h3>Transformations</h3>
             <p>Moderniser une pièce héritée, adapter un vêtement, réutiliser un tissu&nbsp;: une seconde vie, sur mesure.</p>
-            <a class="service-foot" href="tel:+33145871720">Nous consulter <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+            <a class="service-foot" href="tel:+33145871720">Nous consulter <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </article>
 
           <article class="service reveal" style="--d: .06s">
             <div class="service-top">
-              <svg class="icon service-icon" aria-hidden="true"><use href="#i-hanger"></use></svg>
+              <svg class="icon service-icon" aria-hidden="true"><use href="#i-hanger"/></svg>
               <span class="service-num">05</span>
             </div>
             <h3>Cérémonies &amp; occasions</h3>
             <p>Robes, costumes, tenues d’invité&nbsp;: des retouches précises pour un jour où tout doit tomber juste.</p>
-            <a class="service-foot" href="tel:+33145871720">Nous consulter <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+            <a class="service-foot" href="tel:+33145871720">Nous consulter <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </article>
 
           <article class="service reveal" style="--d: .12s">
             <div class="service-top">
-              <svg class="icon service-icon" aria-hidden="true"><use href="#i-tape"></use></svg>
+              <svg class="icon service-icon" aria-hidden="true"><use href="#i-tape"/></svg>
               <span class="service-num">06</span>
             </div>
             <h3>Conseil &amp; essayage</h3>
             <p>Un essayage pour vérifier le tombé, ajuster les repères et valider ensemble le résultat avant de coudre.</p>
-            <a class="service-foot" href="tel:+33145871720">Nous consulter <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+            <a class="service-foot" href="tel:+33145871720">Nous consulter <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         Tarifs
+         ==================================================================== -->
+    <section class="section section--paper" id="tarifs" aria-labelledby="titre-tarifs">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-index">02</span>
+          <div>
+            <p class="eyebrow">Tarifs prêt-à-porter</p>
+            <h2 id="titre-tarifs">Des prix clairs,<br><em>un travail soigné.</em></h2>
+          </div>
+          <p class="section-intro">
+            Nos tarifs de retouche, affichés en toute transparence. Le prix exact est confirmé
+            au dépôt, selon le tissu et le travail à réaliser.
+          </p>
+        </div>
+
+        <div class="pricing-strip reveal">
+          <div class="pricing-strip-main">
+            <span>Ourlet pantalon</span>
+            <strong>dès <em>12&nbsp;€</em></strong>
+          </div>
+          <div class="pricing-strip-tags">
+            <span><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Prix TTC</span>
+            <span><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Devis annoncé avant intervention</span>
+          </div>
+        </div>
+
+        <div class="pricing-tabs" role="group" aria-label="Filtrer les tarifs par vêtement" data-pricing-tabs>
+          <button class="pricing-tab" type="button" data-filter="all" aria-pressed="true">Tout voir</button>
+          <button class="pricing-tab" type="button" data-filter="pantalon" aria-pressed="false">Pantalon</button>
+          <button class="pricing-tab" type="button" data-filter="robe" aria-pressed="false">Robe &amp; jupe</button>
+          <button class="pricing-tab" type="button" data-filter="veste" aria-pressed="false">Veste &amp; manteau</button>
+          <button class="pricing-tab" type="button" data-filter="chemise" aria-pressed="false">Chemise</button>
+          <button class="pricing-tab" type="button" data-filter="cuir" aria-pressed="false">Cuir</button>
+        </div>
+
+        <div class="pricing-grid">
+          <article class="price-card reveal" data-cat="pantalon">
+            <div class="price-card-head">
+              <div class="price-card-title">
+                <svg class="icon" aria-hidden="true"><use href="#i-hem"/></svg>
+                <h3>Pantalon</h3>
+              </div>
+              <span class="price-from">dès 12&nbsp;€</span>
+            </div>
+            <ul class="price-list">
+              <li><span class="label">Ourlet pantalon ou jean simple (machine)</span><span class="leader"></span><span class="price"><small>dès</small>12&nbsp;€</span></li>
+              <li><span class="label">Ourlet pantalon à la main</span><span class="leader"></span><span class="price"><small>dès</small>15&nbsp;€</span></li>
+              <li><span class="label">Ourlet pantalon revers ou talonnette</span><span class="leader"></span><span class="price"><small>dès</small>15&nbsp;€</span></li>
+              <li><span class="label">Reprise côtés ou élargir</span><span class="leader"></span><span class="price"><small>dès</small>20&nbsp;€</span></li>
+              <li><span class="label">Reprise taille ou élargir</span><span class="leader"></span><span class="price"><small>dès</small>25&nbsp;€</span></li>
+              <li><span class="label">Changement fermeture éclair</span><span class="leader"></span><span class="price"><small>dès</small>17&nbsp;€</span></li>
+            </ul>
+          </article>
+
+          <article class="price-card reveal" style="--d: .06s" data-cat="robe">
+            <div class="price-card-head">
+              <div class="price-card-title">
+                <svg class="icon" aria-hidden="true"><use href="#i-dressform"/></svg>
+                <h3>Robe &amp; jupe</h3>
+              </div>
+              <span class="price-from">dès 15&nbsp;€</span>
+            </div>
+            <ul class="price-list">
+              <li><span class="label">Bas ourlet robe et jupe (machine)</span><span class="leader"></span><span class="price"><small>dès</small>15&nbsp;€</span></li>
+              <li><span class="label">Ourlet robe et jupe à la main</span><span class="leader"></span><span class="price"><small>dès</small>20&nbsp;€</span></li>
+              <li><span class="label">Ourlet robe de soirée ample ou plissée</span><span class="leader"></span><span class="price"><small>dès</small>25&nbsp;€</span></li>
+              <li><span class="label">Reprise côtés ou élargir</span><span class="leader"></span><span class="price"><small>dès</small>25&nbsp;€</span></li>
+              <li><span class="label">Reprise taille ou élargir</span><span class="leader"></span><span class="price"><small>dès</small>25&nbsp;€</span></li>
+              <li><span class="label">Changement fermeture éclair</span><span class="leader"></span><span class="price"><small>dès</small>20&nbsp;€</span></li>
+              <li><span class="label">Changement doublure</span><span class="leader"></span><span class="price"><small>dès</small>30&nbsp;€</span></li>
+            </ul>
+          </article>
+
+          <article class="price-card reveal" data-cat="veste">
+            <div class="price-card-head">
+              <div class="price-card-title">
+                <svg class="icon" aria-hidden="true"><use href="#i-coat"/></svg>
+                <h3>Veste &amp; manteau</h3>
+              </div>
+              <span class="price-from">dès 20&nbsp;€</span>
+            </div>
+            <ul class="price-list">
+              <li><span class="label">Ourlet simple ou doublé</span><span class="leader"></span><span class="price"><small>dès</small>30&nbsp;€</span></li>
+              <li><span class="label">Bas de manche simple</span><span class="leader"></span><span class="price"><small>dès</small>20&nbsp;€</span></li>
+              <li><span class="label">Bas de manche avec ouverture</span><span class="leader"></span><span class="price"><small>dès</small>25&nbsp;€</span></li>
+              <li><span class="label">Bas de veste (longueur)</span><span class="leader"></span><span class="price"><small>dès</small>30&nbsp;€</span></li>
+              <li><span class="label">Reprise taille ou élargir</span><span class="leader"></span><span class="price"><small>dès</small>35&nbsp;€</span></li>
+              <li><span class="label">Changement doublure homme</span><span class="leader"></span><span class="price"><small>dès</small>100&nbsp;€</span></li>
+              <li><span class="label">Changement doublure femme</span><span class="leader"></span><span class="price"><small>dès</small>80&nbsp;€</span></li>
+              <li><span class="label">Changement fermeture éclair</span><span class="leader"></span><span class="price"><small>dès</small>50&nbsp;€</span></li>
+            </ul>
+          </article>
+
+          <article class="price-card reveal" style="--d: .06s" data-cat="chemise">
+            <div class="price-card-head">
+              <div class="price-card-title">
+                <svg class="icon" aria-hidden="true"><use href="#i-shirt"/></svg>
+                <h3>Chemise</h3>
+              </div>
+              <span class="price-from">dès 25&nbsp;€</span>
+            </div>
+            <ul class="price-list">
+              <li><span class="label">Bas de manche simple</span><span class="leader"></span><span class="price"><small>dès</small>25&nbsp;€</span></li>
+              <li><span class="label">Bas de chemise (longueur)</span><span class="leader"></span><span class="price"><small>dès</small>25&nbsp;€</span></li>
+              <li><span class="label">Bas de manche avec ouverture</span><span class="leader"></span><span class="price"><small>dès</small>25&nbsp;€</span></li>
+              <li><span class="label">Reprise taille ou élargir</span><span class="leader"></span><span class="price"><small>dès</small>25&nbsp;€</span></li>
+            </ul>
+          </article>
+
+          <article class="price-card reveal" data-cat="cuir">
+            <div class="price-card-head">
+              <div class="price-card-title">
+                <svg class="icon" aria-hidden="true"><use href="#i-leather"/></svg>
+                <h3>Cuir</h3>
+              </div>
+              <span class="price-from">dès 75&nbsp;€</span>
+            </div>
+            <ul class="price-list">
+              <li><span class="label">Changement fermeture éclair</span><span class="leader"></span><span class="price"><small>dès</small>75&nbsp;€</span></li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="pricing-foot reveal">
+          <p><strong>Prix TTC, à partir de.</strong> Le tarif final dépend du tissu et de la complexité de la retouche&nbsp;; il vous est toujours annoncé avant l’intervention.</p>
+          <a class="btn btn--primary" href="tel:+33145871720">
+            Demander un prix
+            <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
+          </a>
         </div>
       </div>
     </section>
@@ -370,7 +603,7 @@
       <div class="shell">
         <h2 class="sr-only" id="titre-savoir-faire">Savoir-faire</h2>
         <div class="craft-head">
-          <span class="section-index">02</span>
+          <span class="section-index">03</span>
           <p class="eyebrow">Savoir-faire</p>
         </div>
 
@@ -405,7 +638,7 @@
     <section class="section" id="avis" aria-labelledby="titre-avis">
       <div class="shell">
         <div class="section-head">
-          <span class="section-index">03</span>
+          <span class="section-index">04</span>
           <div>
             <p class="eyebrow">Avis</p>
             <h2 id="titre-avis">Ce que l’on dit<br><em>de l’atelier.</em></h2>
@@ -420,11 +653,11 @@
           <article class="review reveal">
             <h3 class="sr-only">Avis de Christian G.</h3>
             <span class="stars" role="img" aria-label="5 étoiles sur 5">
-              <svg class="star" aria-hidden="true"><use href="#i-star"></use></svg>
-              <svg class="star" aria-hidden="true"><use href="#i-star"></use></svg>
-              <svg class="star" aria-hidden="true"><use href="#i-star"></use></svg>
-              <svg class="star" aria-hidden="true"><use href="#i-star"></use></svg>
-              <svg class="star" aria-hidden="true"><use href="#i-star"></use></svg>
+              <svg class="star" aria-hidden="true"><use href="#i-star"/></svg>
+              <svg class="star" aria-hidden="true"><use href="#i-star"/></svg>
+              <svg class="star" aria-hidden="true"><use href="#i-star"/></svg>
+              <svg class="star" aria-hidden="true"><use href="#i-star"/></svg>
+              <svg class="star" aria-hidden="true"><use href="#i-star"/></svg>
             </span>
             <blockquote>«&nbsp;Couturier hors pair et vraiment sympa, c’est magnifique&nbsp;!&nbsp;»</blockquote>
             <footer><strong>Christian G.</strong> Mai 2024 · Avis Google</footer>
@@ -433,11 +666,11 @@
           <article class="review reveal" style="--d: .07s">
             <h3 class="sr-only">Avis de Oussama K.</h3>
             <span class="stars" role="img" aria-label="5 étoiles sur 5">
-              <svg class="star" aria-hidden="true"><use href="#i-star"></use></svg>
-              <svg class="star" aria-hidden="true"><use href="#i-star"></use></svg>
-              <svg class="star" aria-hidden="true"><use href="#i-star"></use></svg>
-              <svg class="star" aria-hidden="true"><use href="#i-star"></use></svg>
-              <svg class="star" aria-hidden="true"><use href="#i-star"></use></svg>
+              <svg class="star" aria-hidden="true"><use href="#i-star"/></svg>
+              <svg class="star" aria-hidden="true"><use href="#i-star"/></svg>
+              <svg class="star" aria-hidden="true"><use href="#i-star"/></svg>
+              <svg class="star" aria-hidden="true"><use href="#i-star"/></svg>
+              <svg class="star" aria-hidden="true"><use href="#i-star"/></svg>
             </span>
             <blockquote>«&nbsp;Le travail est bon et bien fait. Je recommande énormément.&nbsp;»</blockquote>
             <footer><strong>Oussama K.</strong> Octobre 2023 · Avis Google</footer>
@@ -446,11 +679,11 @@
           <article class="review reveal" style="--d: .14s">
             <h3 class="sr-only">Avis de Florent B.</h3>
             <span class="stars" role="img" aria-label="5 étoiles sur 5">
-              <svg class="star" aria-hidden="true"><use href="#i-star"></use></svg>
-              <svg class="star" aria-hidden="true"><use href="#i-star"></use></svg>
-              <svg class="star" aria-hidden="true"><use href="#i-star"></use></svg>
-              <svg class="star" aria-hidden="true"><use href="#i-star"></use></svg>
-              <svg class="star" aria-hidden="true"><use href="#i-star"></use></svg>
+              <svg class="star" aria-hidden="true"><use href="#i-star"/></svg>
+              <svg class="star" aria-hidden="true"><use href="#i-star"/></svg>
+              <svg class="star" aria-hidden="true"><use href="#i-star"/></svg>
+              <svg class="star" aria-hidden="true"><use href="#i-star"/></svg>
+              <svg class="star" aria-hidden="true"><use href="#i-star"/></svg>
             </span>
             <blockquote>«&nbsp;Excellente qualité du travail, prix honnête et grande amabilité des propriétaires.&nbsp;»</blockquote>
             <footer><strong>Florent B.</strong> Décembre 2019 · Avis Google</footer>
@@ -461,7 +694,7 @@
           <span>Sélection de trois avis publiés sur Google ; ils ne représentent pas l’ensemble des avis. Les prénoms et initiales sont ceux des auteurs.</span>
           <a href="https://www.google.com/maps/search/?api=1&amp;query=Retoucherie%20Mer%20%C3%89g%C3%A9e%2C%2011%20rue%20Lac%C3%A9p%C3%A8de%2C%2075005%20Paris" target="_blank" rel="noopener">
             Lire les avis sur Google
-            <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
+            <svg class="icon" aria-hidden="true"><use href="#i-external"/></svg>
           </a>
         </div>
       </div>
@@ -473,7 +706,7 @@
     <section class="section section--paper" id="questions" aria-labelledby="titre-questions">
       <div class="shell">
         <div class="section-head">
-          <span class="section-index">04</span>
+          <span class="section-index">05</span>
           <div>
             <p class="eyebrow">Questions</p>
             <h2 id="titre-questions">Avant de<br><em>passer à l’atelier.</em></h2>
@@ -489,7 +722,7 @@
             <details class="faq-item" name="faq">
               <summary>
                 Faut-il prendre rendez-vous&nbsp;?
-                <span class="faq-plus" aria-hidden="true"><svg class="icon"><use href="#i-plus"></use></svg></span>
+                <span class="faq-plus" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span>
               </summary>
               <div class="faq-answer">
                 <p>L’atelier reçoit pendant les heures d’ouverture. Pour une pièce délicate, une transformation ou un essayage, un appel avant de vous déplacer permet de vérifier le moment le plus favorable.</p>
@@ -499,7 +732,7 @@
             <details class="faq-item" name="faq">
               <summary>
                 Quels vêtements retouchez-vous&nbsp;?
-                <span class="faq-plus" aria-hidden="true"><svg class="icon"><use href="#i-plus"></use></svg></span>
+                <span class="faq-plus" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span>
               </summary>
               <div class="faq-answer">
                 <p>Tout vêtement&nbsp;: pantalons, jeans, robes, jupes, chemises, vestes, manteaux, costumes et pièces de cérémonie. Les tissus délicats sont examinés avant toute intervention.</p>
@@ -509,7 +742,7 @@
             <details class="faq-item" name="faq">
               <summary>
                 Combien de temps faut-il prévoir&nbsp;?
-                <span class="faq-plus" aria-hidden="true"><svg class="icon"><use href="#i-plus"></use></svg></span>
+                <span class="faq-plus" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span>
               </summary>
               <div class="faq-answer">
                 <p>Le délai dépend de l’ouvrage et du tissu. Il est confirmé au dépôt. Si vous avez une date, signalez-la dès le départ&nbsp;: nous vous dirons ce qui est réalisable.</p>
@@ -519,7 +752,7 @@
             <details class="faq-item" name="faq">
               <summary>
                 Comment est fixé le prix&nbsp;?
-                <span class="faq-plus" aria-hidden="true"><svg class="icon"><use href="#i-plus"></use></svg></span>
+                <span class="faq-plus" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span>
               </summary>
               <div class="faq-answer">
                 <p>Le tarif est annoncé avant l’intervention, en fonction de la retouche, du tissu et du temps nécessaire. Vous savez ce que vous payez avant de laisser la pièce.</p>
@@ -529,7 +762,7 @@
             <details class="faq-item" name="faq">
               <summary>
                 Puis-je venir avec un vêtement acheté ailleurs&nbsp;?
-                <span class="faq-plus" aria-hidden="true"><svg class="icon"><use href="#i-plus"></use></svg></span>
+                <span class="faq-plus" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span>
               </summary>
               <div class="faq-answer">
                 <p>Oui. L’atelier travaille sur vos vêtements, sans condition d’achat. Apportez la pièce et, si possible, les chaussures ou l’accessoire avec lesquels vous la porterez.</p>
@@ -539,7 +772,7 @@
             <details class="faq-item" name="faq">
               <summary>
                 Comment venir à l’atelier&nbsp;?
-                <span class="faq-plus" aria-hidden="true"><svg class="icon"><use href="#i-plus"></use></svg></span>
+                <span class="faq-plus" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span>
               </summary>
               <div class="faq-answer">
                 <p>Métro Cardinal Lemoine (ligne 10) ou Jussieu (lignes 7 et 10). L’atelier se trouve à quelques pas du Jardin des Plantes, au 11 rue Lacépède.</p>
@@ -552,7 +785,7 @@
             <h3>Le plus simple est de nous appeler.</h3>
             <p>Nous vous répondons pendant les heures d’ouverture et pouvons déjà vous dire si la retouche est possible.</p>
             <a class="phone-link" href="tel:+33145871720">
-              <svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg>
+              <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
               01 45 87 17 20
             </a>
             <p class="hours-mini">
@@ -571,7 +804,7 @@
     <section class="section access" id="acces" aria-labelledby="titre-acces">
       <div class="shell">
         <div class="section-head">
-          <span class="section-index">05</span>
+          <span class="section-index">06</span>
           <div>
             <p class="eyebrow">Accès</p>
             <h2 id="titre-acces">Au cœur<br><em>du 5e.</em></h2>
@@ -615,11 +848,11 @@
               <p class="access-label">Téléphone</p>
               <div class="phone-lines">
                 <a class="phone-line" href="tel:+33145871720">
-                  <svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg>
+                  <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
                   01 45 87 17 20 <small>Boutique</small>
                 </a>
                 <a class="phone-line" href="tel:+33637267409">
-                  <svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg>
+                  <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
                   06 37 26 74 09 <small>Mobile</small>
                 </a>
               </div>
@@ -628,7 +861,7 @@
             <div class="access-block">
               <p class="access-label">Comment venir</p>
               <p class="access-sub">
-                <svg class="icon" aria-hidden="true" style="display:inline-block; width:14px; height:14px; vertical-align:-2px; margin-right:4px; color:var(--copper-dark)"><use href="#i-metro"></use></svg>
+                <svg class="icon" aria-hidden="true" style="display:inline-block; width:14px; height:14px; vertical-align:-2px; margin-right:4px; color:var(--copper-dark)"><use href="#i-metro"/></svg>
                 Métro Cardinal Lemoine (ligne 10) ou Jussieu (lignes 7 et 10).
               </p>
             </div>
@@ -645,11 +878,11 @@
               <div class="map-actions">
                 <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Retoucherie%20Mer%20%C3%89g%C3%A9e%2C%2011%20rue%20Lac%C3%A9p%C3%A8de%2C%2075005%20Paris" target="_blank" rel="noopener">
                   Ouvrir dans Google Maps
-                  <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
+                  <svg class="icon" aria-hidden="true"><use href="#i-external"/></svg>
                 </a>
                 <button class="btn btn--small btn--primary" type="button" data-map-load>
                   Afficher la carte Google
-                  <svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg>
+                  <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
                 </button>
               </div>
             </div>
@@ -676,11 +909,11 @@
           <div class="cta-actions">
             <a class="btn btn--light" href="tel:+33145871720">
               Appeler l’atelier
-              <svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg>
+              <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
             </a>
             <a class="btn btn--outline-light" href="https://www.google.com/maps/dir/?api=1&amp;destination=Retoucherie%20Mer%20%C3%89g%C3%A9e%2C%2011%20rue%20Lac%C3%A9p%C3%A8de%2C%2075005%20Paris" target="_blank" rel="noopener">
               Itinéraire
-              <svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg>
+              <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
             </a>
           </div>
         </div>
@@ -695,7 +928,7 @@
           <strong>Mer Égée</strong>
           <p>Retoucherie &amp; couture au cœur du 5e arrondissement. Tout vêtement, ajusté avec soin.</p>
           <a class="footer-phone" href="tel:+33145871720">
-            <svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg>
+            <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
             01 45 87 17 20
           </a>
         </div>
@@ -707,6 +940,7 @@
             <a href="#prestations">Cintrages</a>
             <a href="#prestations">Transformations</a>
             <a href="#prestations">Cérémonies</a>
+            <a href="#tarifs">Tarifs</a>
           </div>
         </div>
 
@@ -744,15 +978,36 @@
 
   <nav class="mobile-bar" aria-label="Actions rapides">
     <a class="btn btn--primary" href="tel:+33145871720">
-      <svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg>
+      <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
       Appeler
     </a>
     <a class="btn btn--ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination=Retoucherie%20Mer%20%C3%89g%C3%A9e%2C%2011%20rue%20Lac%C3%A9p%C3%A8de%2C%2075005%20Paris" target="_blank" rel="noopener">
-      <svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg>
+      <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
       Itinéraire
     </a>
   </nav>
 
   <script src="assets/js/main.js?v=3" defer></script>
+
+  <!-- Filtre des tarifs -->
+  <script>
+    (function () {
+      var group = document.querySelector('[data-pricing-tabs]');
+      if (!group) return;
+      var tabs = group.querySelectorAll('[data-filter]');
+      var cards = document.querySelectorAll('.price-card[data-cat]');
+      group.addEventListener('click', function (e) {
+        var btn = e.target.closest('[data-filter]');
+        if (!btn) return;
+        var f = btn.getAttribute('data-filter');
+        tabs.forEach(function (t) { t.setAttribute('aria-pressed', t === btn ? 'true' : 'false'); });
+        cards.forEach(function (c) {
+          var show = f === 'all' || c.getAttribute('data-cat') === f;
+          c.hidden = !show;
+          if (show) c.classList.add('is-visible');
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
