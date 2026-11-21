@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600" role="presentation">
+  <defs>
+    <linearGradient id="soie-base" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c27a56"/>
+      <stop offset="0.42" stop-color="#a9553a"/>
+      <stop offset="0.7" stop-color="#b96845"/>
+      <stop offset="1" stop-color="#7e3a29"/>
+    </linearGradient>
+    <linearGradient id="soie-fold-a" x1="0" y1="0" x2="1" y2="0.2">
+      <stop offset="0" stop-color="#e6a57f" stop-opacity="0"/>
+      <stop offset="0.45" stop-color="#efb992" stop-opacity="0.55"/>
+      <stop offset="0.6" stop-color="#f7d2b0" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#8b3f2b" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="soie-fold-b" x1="0" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#5f2a1d" stop-opacity="0.45"/>
+      <stop offset="0.5" stop-color="#8d452f" stop-opacity="0"/>
+      <stop offset="1" stop-color="#f0b58f" stop-opacity="0.28"/>
+    </linearGradient>
+    <filter id="soie-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.12"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="600" height="600" fill="url(#soie-base)"/>
+  <path d="M-40 470C95 330 160 520 300 390S500 220 640 300v340H-40Z" fill="url(#soie-fold-b)"/>
+  <path d="M-30 140C90 60 190 210 320 120s210-90 310-10v210c-110-70-200 40-330 70S40 260-30 330Z" fill="url(#soie-fold-a)"/>
+  <path d="M-20 380c130-100 210 60 340-20s180-120 300-40" fill="none" stroke="#f3c4a0" stroke-width="1.4" opacity="0.35"/>
+  <path d="M-10 430c150-90 220 50 350-30s170-90 280-30" fill="none" stroke="#60291c" stroke-width="2" opacity="0.22"/>
+  <rect width="600" height="600" filter="url(#soie-grain)" opacity="0.5"/>
+</svg>
